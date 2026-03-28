@@ -20,7 +20,7 @@ internal static partial class Helpers
         ".cs",
         ".xaml",
         ".csproj",
-        ".sln",
+        ".slnx",
         ".config",
         ".xml",
         ".json",
@@ -32,6 +32,8 @@ internal static partial class Helpers
         string targetFolder,
         string sourceCsproj,
         string targetCsproj,
+        string sourceSlnx,
+        string targetSlnx,
         string oldName,
         string newName)
     {
@@ -44,10 +46,22 @@ internal static partial class Helpers
         Directory.CreateDirectory(targetFolder);
 
         // Copy all files/folders recursively
-        await CopyFolderRecursively(sourceFolder, targetFolder, oldName, newName, sourceCsproj, targetCsproj);
+        await CopyFolderRecursively(sourceFolder, targetFolder, oldName, newName, sourceCsproj, targetCsproj, sourceSlnx, targetSlnx);
 
         // Copy the main csproj file last
         File.Copy(sourceCsproj, targetCsproj, overwrite: true);
+
+
+        
+
+        File.Copy(sourceSlnx, targetSlnx, overwrite: true);
+
+
+        string content = await ff1.AllTextAsync(targetSlnx);
+        content = content.Replace(oldName, newName);
+        await ff1.WriteAllTextAsync(targetSlnx, content);
+
+
     }
 
     private static async Task CopyFolderRecursively(
@@ -56,7 +70,10 @@ internal static partial class Helpers
         string oldName,
         string newName,
         string sourceCsproj,
-        string targetCsproj)
+        string targetCsproj,
+        string sourceSlnx,
+        string targetSlnx
+        )
     {
         // Copy subfolders
         foreach (string dir in Directory.GetDirectories(source))
@@ -69,7 +86,7 @@ internal static partial class Helpers
 
             string newDir = Path.Combine(target, folderName);
             Directory.CreateDirectory(newDir);
-            await CopyFolderRecursively(dir, newDir, oldName, newName, sourceCsproj, targetCsproj);
+            await CopyFolderRecursively(dir, newDir, oldName, newName, sourceCsproj, targetCsproj, sourceSlnx, targetSlnx);
         }
 
         // Copy files
@@ -83,7 +100,10 @@ internal static partial class Helpers
             {
                 continue;
             }
-
+            if (file.Equals(sourceSlnx, StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }    
             string ext = Path.GetExtension(file);
 
             if (_replaceableExtensions.Contains(ext))

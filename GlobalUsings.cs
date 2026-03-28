@@ -1,2 +1,3 @@
 ﻿global using CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.BuildHooks;
 global using hh1 = ProjectCloneTool.Helpers;
+global using ff1 = CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.FileFunctions.FileFunctions;

@@ -17,8 +17,10 @@
     string oldCsprojPath = Path.Combine(oldProjectFolder, $"{oldName}.csproj");
     string newCsprojPath = Path.Combine(newFolder, $"{newName}.csproj");
 
+    string oldSlnxPath = Path.Combine(oldProjectFolder, $"{oldName}.slnx");
+    string newSlnxPath = Path.Combine(newFolder, $"{newName}.slnx");
 
-    await hh1.CopyFilesAsync(oldProjectFolder, newFolder, oldCsprojPath, newCsprojPath, oldName, newName);
+    await hh1.CopyFilesAsync(oldProjectFolder, newFolder, oldCsprojPath, newCsprojPath, oldSlnxPath, newSlnxPath, oldName, newName);
 
 
     Console.WriteLine("Check So Far");
