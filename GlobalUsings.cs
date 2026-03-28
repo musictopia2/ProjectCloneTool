@@ -1,0 +1,1 @@
+﻿global using CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.BuildHooks;
