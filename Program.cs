@@ -2,7 +2,6 @@
 {
 
     string oldProjectFolder = payLoad.ProjectDir;
-    Console.WriteLine(oldProjectFolder);
 
     string rootFolder = Directory.GetParent(oldProjectFolder.TrimEnd(Path.DirectorySeparatorChar))!.FullName;
     string oldName = payLoad.ProjectName;
